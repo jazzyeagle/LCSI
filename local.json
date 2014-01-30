@@ -1,0 +1,37 @@
+{
+    "projects": [
+        {
+            "program":      "Cadence",
+            "category":     "Audio - JACK Control",
+            "description":  "It lets you control JACK Server settings without going insane",
+            "developer":    "falktx",
+            "website":      "http://kxstudio.sourceforge.net",
+            "e-mail":       "falktx@falktx.com",
+			"screenshot":	"cadence_screenshot.png",
+			"icon":			"cadence_icon.png",
+            "flattr":       "123456",
+            "paypal":       "12345",
+            "apt-get":      "cadence-apt",
+            "yum":          "cadence-yum",
+            "pacaur":       "cadence-git",
+            "hidden":       false
+        },
+
+        {
+	        "program":      "Sorcer",
+            "category":     "Audio - Plugin (LV2)",
+            "description":  "It does that dubstep wub wub stuff",
+            "developer":    "HarryHaaren",
+            "website":      "http://openavproductions.com/sorcer",
+            "e-mail":       "HarryHaaren@openavproductions.com",
+			"screenshot":	"sorcer_screenshot.png",
+			"icon":			"sorcer_icon.png",
+            "flattr":       "1234567",
+            "paypal":       "123456",
+            "apt-get":      "sorcer-apt",
+            "yum":          "sorcer-yum",
+            "pacaur":       "sorcer-git",
+            "hidden":       true
+        }
+    ]
+}
