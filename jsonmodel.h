@@ -3,6 +3,7 @@
 
 #include <QFile>
 #include <QAbstractTableModel>
+#include <QStringList>
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QJsonObject>
@@ -27,6 +28,7 @@ class JSONModel : public QAbstractTableModel {
 		QJsonDocument doc;
 		QJsonArray project;
 		QFile file;
+		QStringList keys;
 		
 };
 
