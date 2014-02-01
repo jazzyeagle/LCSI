@@ -16,6 +16,7 @@ class MainWindow : public QMainWindow {
 		~MainWindow();
 		
 	private:
+		JSONModel *model;
 		Ui::MainWindow *ui;
 };
 

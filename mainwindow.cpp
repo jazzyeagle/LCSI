@@ -3,7 +3,8 @@
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
 	ui->setupUi(this);
-	JSONModel *model = new JSONModel(this);
+	model = new JSONModel(this);
+	ui->table->setVisible(false);
 	ui->table->setModel(model);
 	ui->table->hideColumn(6);
 	ui->table->hideColumn(7);
@@ -13,8 +14,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	ui->table->hideColumn(11);
 	ui->table->hideColumn(12);
 	//ui->table->hideColumn(13);
+	ui->table->resizeColumnsToContents();
+	ui->table->setVisible(true);
 }
 
 MainWindow::~MainWindow() {
+	delete model;
 	delete ui;
 }

@@ -5,7 +5,7 @@ JSONModel::JSONModel(QObject *parent) : QAbstractTableModel(parent) {
 	QMessageBox qmb;
 	QJsonObject projectlist;
 
-	keys << "program" << "category" << "description" << "developer" << "website" << "e-mail" << "screenshot" << "icon" << "flattr" << "paypal" << "apt-get" << "yum" << "pacaur" << "hidden";
+	keys << "Program" << "Category" << "Description" << "Developer" << "Website" << "E-Mail" << "Screenshot" << "Icon" << "Flattr" << "Paypal" << "apt-get" << "yum" << "pacaur" << "hidden";
 
 	file.setFileName("local.json");
 	if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -30,6 +30,18 @@ JSONModel::JSONModel(QObject *parent) : QAbstractTableModel(parent) {
 	file.close();
 }
 
+JSONModel::~JSONModel() {
+	QJsonObject projectlist;
+	projectlist.insert("projects", QJsonValue(project));
+	doc.setObject(projectlist);
+	file.remove();
+	file.open(QIODevice::WriteOnly | QIODevice::Text);
+	if(file.isOpen() && file.isWritable())
+		file.write(doc.toJson());
+	else { QMessageBox qmb;  qmb.setText("Unable to save local.json"); qmb.exec(); }
+	file.close();
+}
+
 
 int JSONModel::rowCount(const QModelIndex &parent) const {
 	Q_UNUSED(parent)
@@ -50,8 +62,12 @@ QVariant JSONModel::data(const QModelIndex &index, int role) const {
 	QJsonObject obj = project.at(index.row()).toObject();
 	if((role==Qt::DisplayRole or role==Qt::EditRole) && index.column() < 13) {
 		result = obj.value(keys.at(index.column())).toString();
-	} else if((role==Qt::CheckStateRole || Qt::EditRole) && index.column()==13)
-		result = obj.value(keys.at(index.column())).toBool();
+	} else if((role==Qt::CheckStateRole) && index.column()==13) {
+		if(obj.value(keys.at(index.column())).toBool())
+			result = Qt::Checked;
+		else
+			result = Qt::Unchecked;
+	}
 	else
 		result = QVariant();
 
@@ -92,14 +108,19 @@ Qt::ItemFlags JSONModel::flags(const QModelIndex &index) const {
 
 
 bool JSONModel::setData(const QModelIndex &index, const QVariant &value, int role) {
+	QMessageBox qmb;
+	QJsonValue temp;
 	QJsonObject obj = project.at(index.row()).toObject();
+	if(role==Qt::CheckStateRole) { qmb.setText(QString("Check State: %1").arg(value.toBool())); qmb.exec(); }
 
-	if(index.isValid() && role==Qt::EditRole && index.column() < 13) {
-		obj.value(keys.at(index.column())) = value.toString();
+	if(index.isValid() && role==Qt::EditRole && index.column() < 14) {
+		obj.insert(keys.at(index.column()), QJsonValue::fromVariant(value));
+		project.replace(index.row(), QJsonValue(obj));
 		emit dataChanged(index, index);
 		return true;
-	} else if(index.isValid() && index.column()==13 && (role==Qt::CheckStateRole || Qt::EditRole)) {
-		obj.value("hidden") = value.toBool();
+	} else if(index.isValid() && role || Qt::CheckStateRole && index.column() < 14) {
+		obj.insert(keys.at(index.column()), QJsonValue::fromVariant(value.toBool()));
+		project.replace(index.row(), QJsonValue(obj));
 		emit dataChanged(index, index);
 		return true;
 	} else {
