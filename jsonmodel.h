@@ -9,8 +9,26 @@
 #include <QJsonObject>
 #include <QJsonValue>
 
+enum repoEnum {
+	program = Qt::UserRole,
+	category,
+	description,
+	developer,
+	website,
+	email,
+	screenshot,
+	icon,
+	flattr,
+	paypal,
+	aptget,
+	yum,
+	pacaur,
+	hidden
+};
+
 class JSONModel : public QAbstractTableModel {
 		Q_OBJECT
+
 	public:
 		explicit JSONModel(QObject *parent = 0);
 		~JSONModel();
@@ -20,17 +38,20 @@ class JSONModel : public QAbstractTableModel {
 		QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 		Qt::ItemFlags flags(const QModelIndex &index) const;
 		bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
-		
+		QStringList getCategories();
+		QHash<int, QByteArray> roleNames() const;
+
 	signals:
-		
+
 	public slots:
 
 	private:
-		QJsonDocument doc;
-		QJsonArray project;
-		QFile file;
-		QStringList keys;
+		void loadHashes();
 		
+		QJsonDocument doc;
+		QJsonArray categories, project;
+		QFile file;
+		QHash<int, QString> keys, repokeys;
 };
 
 #endif // JSONMODEL_H

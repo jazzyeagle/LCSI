@@ -1,36 +1,52 @@
 {
-    "projects": [
-        {
-            "Category": "Audio - JACK Control",
-            "Description": "It does jack shit.",
-            "Developer": "falktx",
-            "E-Mail": "falktx@falktx.com",
-            "Flattr": "123456",
-            "Icon": "cadence_icon.png",
-            "Paypal": "12345",
-            "Program": "Cadence",
-            "Screenshot": "cadence_screenshot.png",
-            "Website": "http://kxstudio.sourceforge.net",
-            "apt-get": "cadence-apt",
-            "hidden": true,
-            "pacaur": "cadence-git",
-            "yum": "cadence-yum"
-        },
-        {
-            "Category": "Audio - Plugin (LV2)",
-            "Description": "It does that dubstep wub wub stuff",
-            "Developer": "HarryHaaren",
-            "E-Mail": "HarryHaaren@openavproductions.com",
-            "Flattr": "1234567",
-            "Icon": "sorcer_icon.png",
-            "Paypal": "123456",
-            "Program": "Sorcer",
-            "Screenshot": "sorcer_screenshot.png",
-            "Website": "http://openavproductions.com/sorcer",
-            "apt-get": "sorcer-apt",
-            "hidden": false,
-            "pacaur": "sorcer-git",
-            "yum": "sorcer-yum"
-        }
-    ]
+	"filetype": "Repository",
+	
+	"categories": [
+		"Audio - DAW",
+		"Audio - JACK Control",
+		"Audio - Mixer",
+		"Audio - Plugin (LADSPA)",
+		"Audio - Plugin (LV2)",
+		"Audio - Plugin (VST - Linux)",
+		"Audio - Plugin (VST - Windows)",
+		"Audio - Synth (Non-Plugin)",
+		"Audio - Other"
+	],
+	
+	"projects": [
+		{
+			"Category": "Audio - JACK Control",
+			"Description": "It does JACK shit.",
+			"Developer": "falktx",
+			"E-Mail": "falktx@falktx.com",
+			"Flattr": "123456",
+			"Icon": "cadence_icon.png",
+			"Paypal": "12345",
+			"Program": "Cadence",
+			"Screenshot": "cadence_screenshot.png",
+			"Website": "http://kxstudio.sourceforge.net",
+			"apt-get": "cadence-apt",
+			"hidden": true,
+			"pacaur": "cadence-git",
+			"yum": "cadence-yum"
+		},
+        
+		{
+			"Category": "Audio - Plugin (LV2)",
+			"Description": "It does that dubstep wub wub stuff",
+			"Developer": "HarryHaaren",
+			"E-Mail": "HarryHaaren@openavproductions.com",
+			"Flattr": "1234567",
+			"Icon": "sorcer_icon.png",
+			"Paypal": "123456",
+			"Program": "Sorcer",
+			"Screenshot": "sorcer_screenshot.png",
+			"Website": "http://openavproductions.com/sorcer",
+			"apt-get": "sorcer-apt",
+			"hidden": false,
+			"pacaur": "sorcer-git",
+			"yum": "sorcer-yum"
+		}
+	]
+
 }
