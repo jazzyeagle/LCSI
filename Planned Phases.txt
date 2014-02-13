@@ -1,0 +1,30 @@
+Programming Phase Plan
+
+Phase 1:  Prototype (complete)
+- Get the UI Running (complete)
+- Create Mockup JSON file (complete)
+- Link JSON to UI (complete)
+
+Phase 2: Prepare For Initial Pre-Alpha Release (DB will not be online)
+- Update JSON file for full data (complete)
+- Create Sorting/Filtering code and link to UI (In Process)
+- Create plugin for data entry (updates TableView, toolbar, and context menus to allow editing)
+
+Phase 3: Installation:  Pre-Alpha
+(Note:  This code will be plugin based)
+- Create ability to scan for packages (& their versions) on local machine
+- Create installation code (Link to Distro's CLI Package Manager)
+
+Phase 4: Client-Server (Once completed, consider software as Alpha)
+- Give the ability to create a repository database (without the installed Table) (directly to remote server? not sure if that would work)
+- Give the ability to access a remote database (read-only to end-user, read & write to maintainer)
+- Sync local database with remote database
+- Give the end-user the ability to obtain from multiple repos at a time with the option to determine on package conflict which repo's package will prevail (latest version, last update, repo order, others?)
+
+
+Phase 5: Beta
+- Fix all major bugs identified in alpha testing
+- Implement additional approved features recommended by testers (general consensus of testers should be required to implement any recommended features)
+
+Phase 6:  Stable Release
+- Fix as many bugs as possible identified in alpha & beta testing
