@@ -11,12 +11,14 @@ int main(int argc, char *argv[])
 {
 	QGuiApplication app(argc, argv);
 	JSONModel *model = new JSONModel();
-	QStringList sl = model->getCategories();
+	QStringList cl = model->getCategories();
+	QStringList tl = model->getTypes();
 	fprintf(stderr, "# of items: %d\n", model->rowCount());
 
 	QQmlApplicationEngine engine;
 	engine.rootContext()->setContextProperty("myModel", model);
-	engine.rootContext()->setContextProperty("catModel", sl);
+	engine.rootContext()->setContextProperty("catModel", cl);
+	engine.rootContext()->setContextProperty("typeModel", tl);
 	engine.load(QUrl("main.qml"));
 
     return app.exec();

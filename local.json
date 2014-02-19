@@ -13,40 +13,125 @@
 		"Audio - Other"
 	],
 	
-	"projects": [
+	"packages": [
 		{
+			"Package": "Cadence",
 			"Category": "Audio - JACK Control",
 			"Description": "It does JACK shit.",
 			"Developer": "falktx",
 			"E-Mail": "falktx@falktx.com",
-			"Flattr": "123456",
-			"Icon": "cadence_icon.png",
-			"Paypal": "12345",
-			"Program": "Cadence",
-			"Screenshot": "cadence_screenshot.png",
 			"Website": "http://kxstudio.sourceforge.net",
-			"apt-get": "cadence-apt",
+			"Icon": "cadence_icon.png",
+			"Screenshot": "cadence_screenshot.png",
 			"hidden": true,
+			"Flattr": "123456",
+			"Paypal": "12345",
+			"apt-get": "cadence-apt",
 			"pacaur": "cadence-git",
 			"yum": "cadence-yum"
 		},
+		
+		{
+			"Package": "Claudia",
+			"Category": "Audio - JACK Control",
+			"Description": "JACK Mapper",
+			"Developer": "falktx",
+			"E-Mail": "falktx@falktx.com",
+			"Website": "http://kxstudio.sourceforge.net",
+			"Icon": "claudia_icon.png",
+			"Screenshot": "claudia_screenshot.png",
+			"hidden": true,
+			"Flattr": "123456",
+			"Paypal": "12345",
+			"apt-get": "claudia-apt",
+			"pacaur": "claudia-git",
+			"yum": "claudia-yum"
+		},		
+		
+		{
+			"Package": "Carla",
+			"Category": "Audio - JACK Control",
+			"Description": "Plugin Host",
+			"Developer": "falktx",
+			"E-Mail": "falktx@falktx.com",
+			"Website": "http://kxstudio.sourceforge.net",
+			"Icon": "carla_icon.png",
+			"Screenshot": "carla_screenshot.png",
+			"hidden": true,
+			"Flattr": "123456",
+			"Paypal": "12345",
+			"apt-get": "carla-apt",
+			"pacaur": "carla-git",
+			"yum": "carla-yum"
+		},
         
 		{
+			"Package": "Sorcer",
 			"Category": "Audio - Plugin (LV2)",
 			"Description": "It does that dubstep wub wub stuff",
 			"Developer": "HarryHaaren",
 			"E-Mail": "HarryHaaren@openavproductions.com",
-			"Flattr": "1234567",
-			"Icon": "sorcer_icon.png",
-			"Paypal": "123456",
-			"Program": "Sorcer",
-			"Screenshot": "sorcer_screenshot.png",
 			"Website": "http://openavproductions.com/sorcer",
-			"apt-get": "sorcer-apt",
+			"Icon": "sorcer_icon.png",
+			"Screenshot": "sorcer_screenshot.png",
 			"hidden": false,
+			"Flattr": "1234567",
+			"Paypal": "123456",
+			"apt-get": "sorcer-apt",
 			"pacaur": "sorcer-git",
 			"yum": "sorcer-yum"
-		}
+		}, 
+		
+		{
+			"Package": "Fabla",
+			"Category": "Audio - Plugin (LV2)",
+			"Description": "Awesome drum stuff",
+			"Developer": "HarryHaaren",
+			"E-Mail": "HarryHaaren@openavproductions.com",
+			"Website": "http://openavproductions.com/fabla",
+			"Icon": "fabla_icon.png",
+			"Screenshot": "fabla_screenshot.png",
+			"hidden": false,
+			"Flattr": "1234567",
+			"Paypal": "123456",
+			"apt-get": "fabla-apt",
+			"pacaur": "fabla-git",
+			"yum": "fabla-yum"
+		}, 
+		
+		{
+			"Package": "QTractor",
+			"Category": "Audio - DAW",
+			"Description": "DAW with Audio & MIDI support",
+			"Developer": "Rui Nuo Capela",
+			"E-Mail": "Rui@rncbc.com",
+			"Website": "http://www.rncbc.com",
+			"Icon": "qtractor_icon.png",
+			"Screenshot": "qtractor_screenshot.png",
+			"hidden": false,
+			"Flattr": "1234567",
+			"Paypal": "123456",
+			"apt-get": "qtractor-apt",
+			"pacaur": "qtractor-git",
+			"yum": "qtractor-yum"
+		}, 
+		
+		{
+			"Package": "QSampler",
+			"Category": "Audio - Synth",
+			"Description": "Support for GIG, SF2, & SFZ files",
+			"Developer": "Rui Nuo Capela",
+			"E-Mail": "Rui@rncbc.com",
+			"Website": "http://www.rncbc.com",
+			"Icon": "qsampler_icon.png",
+			"Screenshot": "qsampler_screenshot.png",
+			"hidden": false,
+			"Flattr": "1234567",
+			"Paypal": "123456",
+			"apt-get": "qsampler-apt",
+			"pacaur": "qsampler-git",
+			"yum": "qsampler-yum"
+		} 
 	]
 
 }

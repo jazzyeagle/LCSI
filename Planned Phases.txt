@@ -7,8 +7,9 @@ Phase 1:  Prototype (complete)
 
 Phase 2: Prepare For Initial Pre-Alpha Release (DB will not be online)
 - Update JSON file for full data (complete)
-- Create Sorting/Filtering code and link to UI (In Process)
-- Create plugin for data entry (updates TableView, toolbar, and context menus to allow editing)
+- Create Sorting/Filtering code and link to UI (complete)
+- Create plugin for data entry (updates TableView, toolbar, and context menus to allow editing) (in 
+process)
 
 Phase 3: Installation:  Pre-Alpha
 (Note:  This code will be plugin based)

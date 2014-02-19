@@ -12,6 +12,9 @@ JSONModel::JSONModel(QObject *parent) : QAbstractTableModel(parent) {
 	if(file.isOpen() && file.isReadable()) {
 		QByteArray bytearray = file.readAll();
 		doc = QJsonDocument::fromJson(bytearray);
+		model.isFiltered = false;
+		model.filterType = QString();
+		model.filterValue = QString();
 
 		if(doc.isNull()) { fprintf(stderr, "doc is NULL"); }
 		else if(doc.isEmpty()) { fprintf(stderr, "doc is empty"); }
@@ -23,9 +26,11 @@ JSONModel::JSONModel(QObject *parent) : QAbstractTableModel(parent) {
 				fprintf(stderr, "Repository loading...\n");
 				keys = repokeys; // Eventually, more hashes will be available based on the file being opened.
 				categories = projectlist.value("categories").toArray();
-				project = projectlist.value("projects").toArray();
+				project = projectlist.value("packages").toArray();
+				model.model = projectlist.value("packages").toArray();
 			}
 		}
+		sort("Package");
 
 	} else {
 		fprintf(stderr, "Unreadable file: %s\n", file.fileName().toLatin1().data());
@@ -34,20 +39,8 @@ JSONModel::JSONModel(QObject *parent) : QAbstractTableModel(parent) {
 	file.close();
 }
 
-JSONModel::~JSONModel() {
-	QJsonObject projectlist;
-	projectlist.insert("projects", QJsonValue(project));
-	doc.setObject(projectlist);
-	file.remove();
-	file.open(QIODevice::WriteOnly | QIODevice::Text);
-	if(file.isOpen() && file.isWritable())
-		file.write(doc.toJson());
-	else { fprintf(stderr, "Unable to save local.json"); }
-	file.close();
-}
-
 void JSONModel::loadHashes() {
-	repokeys[program] = "Program";
+	repokeys[package] = "Package";
 	repokeys[category] = "Category";
 	repokeys[description] = "Description";
 	repokeys[developer] = "Developer";
@@ -65,20 +58,22 @@ void JSONModel::loadHashes() {
 
 int JSONModel::rowCount(const QModelIndex &parent) const {
 	Q_UNUSED(parent)
-	return project.count();
+	return model.model.count();
+	//return project.count();
 }
 
 
 int JSONModel::columnCount(const QModelIndex &parent) const {
 	Q_UNUSED(parent)
-	QJsonObject obj = project.at(0).toObject();
+	//QJsonObject obj = project.at(0).toObject();
+	QJsonObject obj = model.model.at(0).toObject();
 	return obj.count();
 }
 
 QHash<int, QByteArray> JSONModel::roleNames() const {
 	QHash<int, QByteArray> roles;
 
-	roles[program] = "program";
+	roles[package] = "package";
 	roles[category] = "category";
 	roles[description] = "description";
 	roles[developer] = "developer";
@@ -106,9 +101,9 @@ QHash<int, QByteArray> JSONModel::roleNames() const {
 
 QVariant JSONModel::data(const QModelIndex &index, int role) const {
 	QVariant result;
-
-	fprintf(stderr, "Role = %d\n", role);
-	QJsonObject obj = project.at(index.row()).toObject();
+	
+	//QJsonObject obj = project.at(index.row()).toObject();
+	QJsonObject obj = model.model.at(index.row()).toObject();
 	if(role>=Qt::UserRole && index.column() < 13) {
 		result = obj.value(keys[role]).toString();
 	} else if((role>=Qt::UserRole) && index.column()==13) {
@@ -132,7 +127,7 @@ QVariant JSONModel::headerData(int section, Qt::Orientation orientation, int rol
 
 	if(orientation==Qt::Horizontal) {
 		if(section < 13) {
-			QJsonObject obj = project.at(section).toObject();
+			//QJsonObject obj = project.at(section).toObject();
 			return keys[role];
 		}
 		else
@@ -157,16 +152,19 @@ Qt::ItemFlags JSONModel::flags(const QModelIndex &index) const {
 
 bool JSONModel::setData(const QModelIndex &index, const QVariant &value, int role) {
 	QJsonValue temp;
-	QJsonObject obj = project.at(index.row()).toObject();
+	//QJsonObject obj = project.at(index.row()).toObject();
+	QJsonObject obj = model.model.at(index.row()).toObject();
 
 	if(index.isValid() && role>=Qt::UserRole && index.column() < 13) {
 		obj.insert(keys[role], QJsonValue::fromVariant(value));
-		project.replace(index.row(), QJsonValue(obj));
+		model.model.replace(index.row(), QJsonValue(obj));
+		//project.replace(index.row(), QJsonValue(obj));
 		emit dataChanged(index, index);
 		return true;
 	} else if(index.isValid() && role>=Qt::UserRole && index.column() == 13) {
 		obj.insert(keys[role], QJsonValue::fromVariant(value.toBool()));
-		project.replace(index.row(), QJsonValue(obj));
+		model.model.replace(index.row(), QJsonValue(obj));
+		//project.replace(index.row(), QJsonValue(obj));
 		emit dataChanged(index, index);
 		return true;
 	} else {
@@ -187,4 +185,72 @@ QStringList JSONModel::getCategories() {
 	}
 		
 	return cl;
+}
+
+QStringList JSONModel::getTypes() {
+	QStringList cl;
+	cl.append(keys.value(package));
+	cl.append(keys.value(category));
+	cl.append(keys.value(description));
+	cl.append(keys.value(developer));
+	cl.append(keys.value(website));
+	cl.append(keys.value(email));
+	
+	return cl;
+}
+
+void JSONModel::sort(QString sortType) {
+	qDebug() << "Sort List";
+	QStringList list;
+	QJsonArray sorted;
+	
+	// Load up QStringList
+	for(int i=0; i<model.model.count(); i++)
+		list << model.model.at(i).toObject().value(sortType).toString();
+		
+	list.sort();
+	
+	// Now that we have the strings sorted, let's rearrange the objects into a new array
+	for(int i=0; i<model.model.count(); i++) {
+		int j=0;
+		while(model.model.at(j).toObject().value(sortType).toString().compare(list.at(i)))
+			j++;
+		sorted.append(model.model.at(j));
+	}
+	
+	// then copy the new array to the old array
+	model.model = sorted;
+}
+
+void JSONModel::filterChanged(QString type, QString value) {
+	QJsonObject obj;
+	qDebug() << "Filter Changed";
+	
+	if((value.isEmpty() || value == "All") && model.isFiltered) {
+		model.isFiltered = false;
+		model.model = project;
+		sort("Package");
+		emit dataChanged(createIndex(0, 0), createIndex(project.count(), model.model.at(0).toObject().count()));  // Using project to ensure all lines are refreshed
+	} else {
+		model.isFiltered = true;
+		if(!(type == model.filterType && value.contains(model.filterValue))) { // If the category changed or if the user is typing different text...
+			model.model = project;   // then reset the data in case there is a new way to filter the data
+			sort("Package");
+		}
+		
+		model.filterType = type;
+		model.filterValue = value;
+		
+		qDebug() << model.model.count();
+		for(int i=0; i< model.model.count(); i++) {
+			obj = model.model.at(i).toObject();
+			qDebug() << QString("Value = %1, Type = %2, Object = %3").arg(value).arg(type).arg(obj.value(type).toString());
+			if(!obj.value(type).toString().startsWith(value, Qt::CaseInsensitive)) {
+				model.model.removeAt(i);
+				i--;  // Decrement the counter to ensure we don't accidentally skip any objects during the review.
+			}
+		}
+		
+		emit dataChanged(createIndex(0, 0), createIndex(project.count(), obj.count()));  // Using project to ensure all lines are refreshed
+	}
 }

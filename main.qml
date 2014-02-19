@@ -41,18 +41,28 @@ ApplicationWindow {
             Layout.column:      0
             Layout.rowSpan:     1
             Layout.columnSpan:  1
-            text: "Categories"
+            text: "Filter By:"
             Layout.fillWidth: true
         }
 
         ComboBox {
-            id: categories
-            model: catModel
+            id: types
+            model: typeModel
             Layout.row:         0
             Layout.column:      1
             Layout.rowSpan:     1
             Layout.columnSpan:  2
             Layout.fillWidth: true
+            
+            onCurrentIndexChanged: {
+				if(types.textAt(currentIndex) == "Category") {
+					searchCombo.visible = true;
+					searchText.visible = false;
+				} else {
+					searchCombo.visible = false;
+					searchText.visible = true;
+				}
+            }
         }
 
         Label {
@@ -64,13 +74,28 @@ ApplicationWindow {
             Layout.fillWidth: true
         }
 
+		ComboBox {
+			id: searchCombo
+			model: catModel
+			Layout.row:         0
+            Layout.column:      5
+            Layout.rowSpan:     1
+            Layout.columnSpan:  2
+            Layout.fillWidth: true
+            visible: false
+            
+            onCurrentIndexChanged: { myModel.filterChanged(types.currentText, searchCombo.textAt(currentIndex)); }
+		}
+		
         TextField {
-            id: search
+            id: searchText
             Layout.row:         0
             Layout.column:      5
             Layout.rowSpan:     1
             Layout.columnSpan:  2
             Layout.fillWidth: true
+            
+            onTextChanged: { myModel.filterChanged(types.currentText, searchText.text); }
         }
 
         TableView {
@@ -82,7 +107,7 @@ ApplicationWindow {
             Layout.fillHeight: true
             Layout.fillWidth: true
 
-            TableViewColumn { role: "program"; title: "Program" }
+            TableViewColumn { role: "package"; title: "Package" }
             TableViewColumn { role: "category"; title: "Category" }
             TableViewColumn { role: "description"; title: "Description" }
             TableViewColumn { role: "developer"; title: "Developer" }
