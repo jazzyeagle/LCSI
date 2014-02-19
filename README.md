@@ -8,7 +8,7 @@ Please review the LCSI Spec Document (.odt format) for more details on the whats
 
 <B><I>Note:</I></B>  To build this program you currently need to have the following packages installed:
 
-<B>Arch:</B> qt5, qt-quick1, qt-quickcontrols
+<B>Arch:</B> qt5, qt5-quick1, qt5-quickcontrols
 
 
 
